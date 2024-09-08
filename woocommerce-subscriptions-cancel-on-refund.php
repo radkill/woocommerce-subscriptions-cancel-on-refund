@@ -70,3 +70,15 @@ function pp_maybe_cancel_subscription_on_full_refund( $order ) {
 	}
 }
 add_action( 'woocommerce_order_fully_refunded', 'pp_maybe_cancel_subscription_on_full_refund' );
+
+/**
+ * Declare plugin compatibility with WooCommerce HPOS.
+ */
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
